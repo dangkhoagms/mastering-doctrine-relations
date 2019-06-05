@@ -25,26 +25,26 @@ config .env :APP_ENV=prod
 	    channels: ["markdown"]
 
 
-####create monolog.yaml and paste code
+#### create monolog.yaml and paste code
     monolog: 
 	    channels: ['markdown'
-####register with services.yaml
-####1
+#### register with services.yaml
+#### 1
     App\services\MarkDownHelper:
 	    arguments:
 		    $logger: '@monolog.logger.markdown'
 
-####other #2: using bind block _defaults:
+#### other #2: using bind block _defaults:
     bind: 
 	    $markdownLogger: '@monolog.logger.markdown'
     
-####important: 
+#### important: 
     file [service] change LoggerInterface variable to  $markdownLogger
-###Parameter in yaml file
+### Parameter in yaml file
     parameters: 
 	    cache_adapter: 'cache.adapter.apcu'
 using  ‘%cache_adapter%’
-###Bind no working controller
+### Bind no working controller
     https://symfonycasts.com/screencast/symfony-fundamentals/controller-constructor#play
 in video, it’s work through __contruct() .
 But now it’s working good.!!!  
