@@ -1,17 +1,17 @@
 # symfony-fundamentals
-       Symfony 4 Fundamentals: Services, Config & Environments Tutorial
+# Symfony 4 Fundamentals: Services, Config & Environments Tutorial
 # NOTE
-###AdapterInterface
-get data from cache: 
-$item = $adapter→getItem('markdown_'.md5($articleContent));
-$item→get() : return data.
-Save data to cache: 
-$item->set($markdown->transform($articleContent)); $adapter->save($item);
-###change cache.yaml
+### AdapterInterface
+##### get data from cache: 
+    $item = $adapter→getItem('markdown_'.md5($articleContent));
+    $item→get() : return data.
+##### Save data to cache: 
+    $item->set($markdown->transform($articleContent)); $adapter->save($item);
+### Change cache.yaml
 enabled cache.adapter.apcu
 config .env :APP_ENV=prod
 => cache no rebuild 
-### create service
+### Create service
  create folder container [Services]
  create class [service] have __construct
  create function
