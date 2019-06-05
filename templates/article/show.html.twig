@@ -22,7 +22,7 @@
         </tbody>
     </table>
     <h2>Content</h2>
-    {{ article_content  | raw}}
+    {{ article_content  | cached_markdown}}
     <p>-----</p>
     <a href="{{ path('article_index') }}">back to list</a>
 
