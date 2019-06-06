@@ -92,6 +92,21 @@ install lib using script 7
 
     {{ article_content |cached_markdown}}
 
+### 4. Custom query 
+
+        public function findByExampleField()
+        {
+            return $this->createQueryBuilder('a')
+                ->orderBy('a.id', 'DESC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+**read more**
+
+![doctrine-project.org](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/dql-doctrine-query-language.html)
+    
 # SCRIPT
 ### 1. Make entity
     bin/console make:entity
