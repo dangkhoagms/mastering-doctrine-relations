@@ -22,6 +22,7 @@ class ArticleFixtures extends AppFixtures
             $article->setContent(sprintf("baz%d", $i));
             $article->setPublishedAt(new \DateTime());
             $article->setHeartCount($this->faker->randomElement(self::$Article_heart));
+            $article->setSlug($this->faker->slug);
             $manager->persist($article);
         }
 

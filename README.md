@@ -214,6 +214,35 @@ and then `run script 6`
 
 **Read more**
 https://github.com/fzaninotto/Faker#fakerprovideren_uscompany
+
+### 6. Working datetime
+**entity**
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $createAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updateAt;
+**config stof_doctrine_extensions.yaml**
+    
+    stof_doctrine_extensions:
+        default_locale: en_US
+        orm:
+            default:
+                sluggable: true
+                timestampable : true
+
+
+
+**Read more**
+https://symfony.com/doc/master/bundles/StofDoctrineExtensionsBundle/configuration.html#add-the-extensions-to-your-mapping
+
 # SCRIPT
 ### 1. Make entity
     bin/console make:entity
@@ -235,4 +264,7 @@ https://github.com/fzaninotto/Faker#fakerprovideren_uscompany
     composer require knplabs/knp-time-bundle
 ### 10. Install lib faker
     composer require fzaninotto/faker
-  
+### 11. Install lib doctrine-extensions-bundle
+    composer require stof/doctrine-extensions-bundle
+### 12. drop database
+    bin/console doctrine:database:drop --force

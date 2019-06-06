@@ -64,7 +64,7 @@ class ArticleController extends AbstractController
 
     }
     /**
-     * @Route("/{id}", name="article_show", methods={"GET"})
+     * @Route("/{slug}", name="article_show", methods={"GET"})
      */
     public function show(Article $article, MarkDownHelper $markDownHelper,SlackClient $slack): Response
     {
