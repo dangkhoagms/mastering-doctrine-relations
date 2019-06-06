@@ -34,7 +34,7 @@
     {{ article_content  | cached_markdown}}
 
 ### 2. using lib Kpn Time Bundle
-install lib using script 7
+install lib using script 8
  
 **Template html**
 
@@ -162,7 +162,58 @@ edit table
                 </tr>
             </tbody>
         </table>
+### 5. Working faker 
+`install script 10` 
+
+**change class AppFixtures**
     
+    class AppFixtures extends Fixture
+    {
+        /** @var Generator */
+        protected $faker;
+    
+        public function __construct()
+        {
+            $this->faker = Factory::create();
+        }
+    
+        public function load(ObjectManager $manager)
+        {
+            // $product = new Product();
+            // $manager->persist($product);
+    
+            $manager->flush();
+        }
+    }
+
+**change class ArticleFixtures**
+    
+    class ArticleFixtures extends AppFixtures
+    {
+        private static $Article_titles = [
+            'foo one',
+            'foo two'
+        ];
+        private static $Article_heart = [0,10,20,100];
+    
+        public function load(ObjectManager $manager)
+        {
+            for ($i = 1; $i <= 10; $i++) {
+                $article = new Article();
+                $article->setName($this->faker->randomElement(self::$Article_titles));
+                $article->setContent(sprintf("baz%d", $i));
+                $article->setPublishedAt(new \DateTime());
+                $article->setHeartCount($this->faker->randomElement(self::$Article_heart));
+                $manager->persist($article);
+            }
+    
+            $manager->flush();
+        }
+    }
+and then `run script 5`
+
+**Read more**
+https://github.com/fzaninotto/Faker#fakerprovideren_uscompany
 # SCRIPT
 ### 1. Make entity
     bin/console make:entity
@@ -178,8 +229,10 @@ edit table
     bin/console doctrine:fixtures:load
 ### 6. Twig extensions!
     bin/console make:twig-extension
-### 7. Query Sql with doctrine
+### 8. Query Sql with doctrine
     bin/console doctrine:query:sql "select * from table_name"
-### 7. Install lib Kpn Time Bundle
+### 9. Install lib Kpn Time Bundle
     composer require knplabs/knp-time-bundle
-
+### 10. Install lib faker
+    composer require fzaninotto/faker
+  
