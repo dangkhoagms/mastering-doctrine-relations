@@ -3,20 +3,22 @@
 namespace App\Twig;
 
 use App\services\MarkDownHelper;
+use Psr\Container\ContainerInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
-class AppExtension extends AbstractExtension
+class AppExtension extends AbstractExtension implements ServiceSubscriberInterface
 {
-    /**
-     * @var MarkDownHelper
-     */
-    private $helper;
 
-    public function __construct(MarkDownHelper $helper)
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ContainerInterface $container)
     {
-        $this->helper = $helper;
+        $this->container = $container;
     }
 
     public function getFilters(): array
@@ -31,6 +33,19 @@ class AppExtension extends AbstractExtension
 
     public function processMarkup($value)
     {
-        return $this->helper->parse($value);
+
+        return $this->container
+            ->get(MarkDownHelper::class)
+            ->parse($value);
     }
+
+    public static function getSubscribedServices()
+    {
+
+        return[
+            MarkDownHelper::class
+        ];
+
+    }
+
 }

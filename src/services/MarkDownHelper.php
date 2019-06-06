@@ -15,6 +15,7 @@ class MarkDownHelper
     private $logger;
     public function __construct(MarkdownInterface $markdown,AdapterInterface $adapter,LoggerInterface $markdownLogger)
     {
+
         $this->adapter = $adapter;
         $this->markdown = $markdown;
         $this->logger = $markdownLogger;
