@@ -26,6 +26,11 @@ class Article
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $publishedAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Article
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }

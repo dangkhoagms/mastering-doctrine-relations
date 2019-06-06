@@ -1,6 +1,6 @@
 # NOTE
-### Twig extension
-##### src/Twig/AppExtension.php
+### 1. Twig extension
+**src/Twig/AppExtension.php** 
 
     class AppExtension extends AbstractExtension
     {
@@ -28,23 +28,37 @@
         {
             return $this->helper->parse($value);
         }
-##### show.html.twig
-    {{ article_content  | cached_markdown}}
-    
-    
-# SCRIPT
-### make entity
-    bin/console make:entity
 
-### create database
+**template show.html.twig**
+
+    {{ article_content  | cached_markdown}}
+
+### 2. using lib Kpn Time Bundle
+install lib using script 7
+ 
+**Template html**
+
+    {{ article.publishedAt | ago }}
+**Read more at** https://github.com/KnpLabs/KnpTimeBundle
+ 
+
+# SCRIPT
+### 1. Make entity
+    bin/console make:entity
+### 2. Create database
     bin/console doctrine:database:create
-### make:migration
+### 3. Make:migration
     bin/console make:migration
-### create table to database
-    bin/console make:migrations:migrate
+### 4. Create table to database
+    bin/console doctrine:migrations:migrate
 ### fixture data 
     bin/console make:fixtures
-### doctrine load data
+### 5. Doctrine load data
     bin/console doctrine:fixtures:load
-### Twig extensions!
+### 6. Twig extensions!
     bin/console make:twig-extension
+### 7. Query Sql with doctrine
+    bin/console doctrine:query:sql "select * from table_name"
+### 7. Install lib Kpn Time Bundle
+    composer require knplabs/knp-time-bundle
+

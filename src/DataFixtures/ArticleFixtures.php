@@ -14,6 +14,7 @@ class ArticleFixtures extends Fixture
             $article = new Article();
             $article->setName(sprintf("foo%d",$i));
             $article->setContent(sprintf("baz%d",$i));
+            $article->setPublishedAt(new \DateTime());
             $manager->persist($article);
         }
 
