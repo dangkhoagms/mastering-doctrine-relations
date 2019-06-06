@@ -31,6 +31,11 @@ class Article
      */
     private $publishedAt;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $heartCount;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class Article
     public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getHeartCount(): ?int
+    {
+        return $this->heartCount;
+    }
+
+    public function setHeartCount(int $heartCount): self
+    {
+        $this->heartCount = $heartCount;
 
         return $this;
     }

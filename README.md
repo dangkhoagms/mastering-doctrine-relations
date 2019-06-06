@@ -103,9 +103,65 @@ install lib using script 7
                 ->getResult()
             ;
         }
-**read more**
+**Read more:**
+(https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/dql-doctrine-query-language.html)
 
-![doctrine-project.org](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/dql-doctrine-query-language.html)
+### 4. Working Ajax
+**src/Controller/ArticleController.php** 
+add method return count heart
+    
+     /**
+         * @Route("/heart/{id}", name="article_heart", methods={"GET","POST"})
+         */
+        public function heart_count(Article $article){
+            $article->setHeartCount($article->getHeartCount()+1);
+            $this->getDoctrine()->getManager()->flush();
+            return new JsonResponse(['heart'=>$article->getHeartCount()]);
+    
+        }
+    
+**public/js/work_heart.js**
+    
+    $(document).ready(function (e) {
+        $('.heart').click(function (event) {
+            $.ajax({
+                url:'/article/heart/'+$('#article-id').text(),
+                method:'POST'
+            }).done(function (data) {
+                $('.heart').html(data['heart']);
+            });
+        });
+    
+    });
+**templates/base.html.twig**
+
+    {% block js %}
+                <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+                <script src="{{ asset('js/work_heart.js') }}" ></script>
+    % endblock %}
+**template/article/show.html.twig**
+edit table
+
+     <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td id="article-id">{{ article.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ article.name }}</td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>{{ article.content }}</td>
+                </tr>
+                <tr>
+                    <th>Tym</th>
+                    <td class="heart">{{ article.heartCount }}</td>
+                </tr>
+            </tbody>
+        </table>
     
 # SCRIPT
 ### 1. Make entity

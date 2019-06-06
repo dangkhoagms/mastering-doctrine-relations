@@ -3,7 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block js %}
+            <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+            <script src="{{ asset('js/work_heart.js') }}" ></script>
+        {% endblock %}
+        {% block stylesheets %}
+
+        {% endblock %}
+
     </head>
     <body>
         {% block body %}{% endblock %}

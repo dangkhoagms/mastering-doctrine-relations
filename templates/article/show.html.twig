@@ -9,7 +9,7 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ article.id }}</td>
+                <td id="article-id">{{ article.id }}</td>
             </tr>
             <tr>
                 <th>Name</th>
@@ -18,6 +18,10 @@
             <tr>
                 <th>Content</th>
                 <td>{{ article.content }}</td>
+            </tr>
+            <tr>
+                <th>Tym</th>
+                <td class="heart">{{ article.heartCount }}</td>
             </tr>
         </tbody>
     </table>

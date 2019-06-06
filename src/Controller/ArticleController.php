@@ -10,6 +10,7 @@ use App\services\SlackClient;
 use Nexy\Slack\Attachment;
 use Nexy\Slack\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,7 +54,15 @@ class ArticleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/heart/{id}", name="article_heart", methods={"GET","POST"})
+     */
+    public function heart_count(Article $article){
+        $article->setHeartCount($article->getHeartCount()+1);
+        $this->getDoctrine()->getManager()->flush();
+        return new JsonResponse(['heart'=>$article->getHeartCount()]);
 
+    }
     /**
      * @Route("/{id}", name="article_show", methods={"GET"})
      */
@@ -119,4 +128,5 @@ EOF;
 
         return $this->redirectToRoute('article_index');
     }
+
 }

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -25,9 +26,8 @@ class ArticleRepository extends ServiceEntityRepository
 
     public function findByExampleField()
     {
-        return $this->createQueryBuilder('a')
+        return $this->addIsPublishedQueryBuilder()
             ->orderBy('a.id', 'DESC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
@@ -45,4 +45,11 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
+    private function addIsPublishedQueryBuilder(QueryBuilder $builder = null){
+        return $this->getOrCreateQueryBuilder($builder)
+            ->andWhere('a.publishedAt IS NOT NULL');
+    }
+    private  function  getOrCreateQueryBuilder(QueryBuilder $qb = null){
+        return $qb? : $this->createQueryBuilder('a');
+    }
 }
