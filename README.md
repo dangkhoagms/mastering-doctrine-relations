@@ -210,7 +210,7 @@ edit table
             $manager->flush();
         }
     }
-and then `run script 5`
+and then `run script 6`
 
 **Read more**
 https://github.com/fzaninotto/Faker#fakerprovideren_uscompany
@@ -223,11 +223,11 @@ https://github.com/fzaninotto/Faker#fakerprovideren_uscompany
     bin/console make:migration
 ### 4. Create table to database
     bin/console doctrine:migrations:migrate
-### fixture data 
+### 5. fixture data 
     bin/console make:fixtures
-### 5. Doctrine load data
+### 6. Doctrine load data
     bin/console doctrine:fixtures:load
-### 6. Twig extensions!
+### 7. Twig extensions!
     bin/console make:twig-extension
 ### 8. Query Sql with doctrine
     bin/console doctrine:query:sql "select * from table_name"
