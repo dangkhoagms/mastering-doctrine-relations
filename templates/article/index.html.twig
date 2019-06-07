@@ -11,7 +11,9 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Content</th>
-                <th>actions</th>
+                <th>Published At</th>
+                <th>Comment count</th>
+                <th>Actions </th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +23,7 @@
                 <td>{{ article.name }}</td>
                 <td>{{ article.content }}</td>
                 <td>{{ article.publishedAt | ago }}</td>
+                <td>{{ article.noneDeleteComments | length }}</td>
                 <td>
                     <a href="{{ path('article_show', {slug: article.slug}) }}">show</a>
                     <a href="{{ path('article_edit', {id: article.id}) }}">edit</a>

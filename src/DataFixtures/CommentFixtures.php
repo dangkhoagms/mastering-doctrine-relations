@@ -19,6 +19,7 @@ class CommentFixtures extends AppFixtures
             $comment->setAuthorName($this->faker->name);
             $comment->setCreatedAt($this->faker->dateTimeBetween('-1 months', '-1 seconds'));
             $comment->setArticle($article);
+            $comment->setIsDeleted($this->faker->boolean(20));
         });
         $manager->flush();
 

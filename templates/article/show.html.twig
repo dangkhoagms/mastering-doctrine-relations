@@ -28,11 +28,15 @@
     <h2>Content</h2>
     {{ article_content |cached_markdown }}
     <p>-----</p>
-    <h2>Comment</h2>
-    {% for comment in article.comments %}
+    <h2>Comment <span> {{  article.comments | length }}</span></h2>
+    {% for comment in article.noneDeleteComments %}
         <div class="">
             <span class="">{{ comment.authorName }}</span>
-            <span>{{ comment.updatedAt | ago}}</span>
+            <span>{{ comment.createdAt | ago}}</span>
+            {% if comment.isDeleted %}
+                <span>deleted</span>
+            {% endif %}
+
         </div>
         <div class="">
             <p>{{ comment.content }}</p>

@@ -1,5 +1,5 @@
 # NOTE
-### Work AppFixtures Relation ManyToOne
+### 1. Work AppFixtures Relation ManyToOne
 
 
 **add data**
@@ -55,7 +55,7 @@ Using
         $manager->flush();
 
     }
-### Remname Class Fixtures
+### 2. Rename Class Fixtures
  
 You can implement DependentFixtureInterface of lib use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
@@ -65,3 +65,19 @@ You can implement DependentFixtureInterface of lib use Doctrine\Common\DataFixtu
                 ArticleFixtures::class
             ];
         }
+### 3. criteria with comment delete
+***class ArticleRepository***
+
+    public function createNonDeletedCriteria(){
+            return $criteria = Criteria::create()
+                ->andWhere(Criteria::expr()->eq('isDeleted',false))
+                ->orderBy(['createdAt'=>'DESC']);
+        }
+***class Article***
+    
+    public  function getNoneDeleteComments():Collection
+        {
+    
+            return $this->comments->matching(ArticleRepository::createNonDeletedCriteria());
+        }
+

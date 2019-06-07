@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -16,6 +18,7 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+
      */
     private $id;
 
@@ -48,6 +51,7 @@ class Article
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
+     *
      */
     private $createAt;
 
@@ -58,7 +62,8 @@ class Article
     private $updateAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article",fetch="LAZY")
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $comments;
 
@@ -162,6 +167,12 @@ class Article
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    public  function getNoneDeleteComments():Collection
+    {
+
+        return $this->comments->matching(ArticleRepository::createNonDeletedCriteria());
     }
 
     public function addComment(Comment $comment): self
