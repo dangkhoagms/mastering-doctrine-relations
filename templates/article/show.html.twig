@@ -7,27 +7,39 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td id="article-id">{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ article.name }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ article.content }}</td>
-            </tr>
-            <tr>
-                <th>Tym</th>
-                <td class="heart">{{ article.heartCount }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td id="article-id">{{ article.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ article.name }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ article.content }}</td>
+        </tr>
+        <tr>
+            <th>Tym</th>
+            <td class="heart">{{ article.heartCount }}</td>
+        </tr>
         </tbody>
     </table>
     <h2>Content</h2>
-    {{ article_content |cached_markdown}}
+    {{ article_content |cached_markdown }}
     <p>-----</p>
+    <h2>Comment</h2>
+    {% for comment in article.comments %}
+        <div class="">
+            <span class="">{{ comment.authorName }}</span>
+            <span>{{ comment.updatedAt | ago}}</span>
+        </div>
+        <div class="">
+            <p>{{ comment.content }}</p>
+        </div>
+
+    {% endfor %}
+
     <a href="{{ path('article_index') }}">back to list</a>
 
     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>

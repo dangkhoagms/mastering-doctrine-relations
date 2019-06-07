@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use App\Entity\Comment;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class ArticleFixtures extends AppFixtures
@@ -14,17 +14,17 @@ class ArticleFixtures extends AppFixtures
     ];
     private static $Article_heart = [0,10,20,100];
 
-    public function load(ObjectManager $manager)
+
+    protected function loadData(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 10; $i++) {
-            $article = new Article();
+        $this->createMany(Article::class,100,function (Article $article, $count) use ($manager){
             $article->setName($this->faker->randomElement(self::$Article_titles));
-            $article->setContent(sprintf("baz%d", $i));
+            $article->setContent(sprintf($this->faker->paragraph));
             $article->setPublishedAt(new \DateTime());
             $article->setHeartCount($this->faker->randomElement(self::$Article_heart));
             $article->setSlug($this->faker->slug);
             $manager->persist($article);
-        }
+        });
 
         $manager->flush();
     }
