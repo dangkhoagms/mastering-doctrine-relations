@@ -89,8 +89,20 @@ Run script debug:twig to view syntax
 
     {{ comment.content | truncate}}
     
+    
+### 5. Query database using like param
 
+      public function findAllWithSearch($term){
 
+        $qb = $this->createQueryBuilder('c');
+
+        if($term){
+            $qb->andWhere('c.content LIKE :term OR c.authorName LIKE :term')
+            ->setParameter('term','%'.$term.'%');
+        }
+        return $qb->getQuery()->getResult();
+
+      }
     
 # SCRIPT
 

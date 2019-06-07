@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -15,11 +16,12 @@ class CommentAdminController extends AbstractController
     /**
      * @Route("/", name="comment_admin")
      */
-    public function index(CommentRepository $commentRepository)
+    public function index(CommentRepository $commentRepository,Request $request)
     {
+        $comments = $commentRepository->findAllWithSearch($request->query->get('p'));
         return $this->render('comment_admin/index.html.twig', [
             'controller_name' => 'CommentAdminController',
-            'comments'=>$commentRepository->findAll()
+            'comments'=>$comments
         ]);
     }
 
