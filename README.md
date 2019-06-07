@@ -55,3 +55,13 @@ Using
         $manager->flush();
 
     }
+### Remname Class Fixtures
+ 
+You can implement DependentFixtureInterface of lib use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+
+    public function getDependencies()
+        {
+            return [
+                ArticleFixtures::class
+            ];
+        }
