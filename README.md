@@ -80,4 +80,19 @@ You can implement DependentFixtureInterface of lib use Doctrine\Common\DataFixtu
     
             return $this->comments->matching(ArticleRepository::createNonDeletedCriteria());
         }
+        
+### 4. Working Twig
 
+Run script twig
+
+Run script debug:twig to view syntax
+
+    {{ comment.content | truncate}}
+    
+
+
+    
+# SCRIPT
+
+###1. twig extension
+    composer require twig/extensions

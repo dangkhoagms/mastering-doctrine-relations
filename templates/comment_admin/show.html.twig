@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td id="article-id">{{ comment.id }}</td>
+        </tr>
+        <tr>
+            <th>Author Name</th>
+            <td>{{ comment.authorName}}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ comment.content }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('comment_admin') }}">back to list</a>
+{% endblock %}

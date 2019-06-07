@@ -18,7 +18,7 @@ class ArticleFixtures extends AppFixtures
     protected function loadData(ObjectManager $manager)
     {
         $this->createMany(Article::class,100,function (Article $article, $count) use ($manager){
-            $article->setName($this->faker->randomElement(self::$Article_titles));
+            $article->setName($this->faker->name);
             $article->setContent(sprintf($this->faker->paragraph));
             $article->setPublishedAt(new \DateTime());
             $article->setHeartCount($this->faker->randomElement(self::$Article_heart));

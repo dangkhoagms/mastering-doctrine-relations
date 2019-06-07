@@ -62,7 +62,7 @@ class Article
     private $updateAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article",fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article",fetch="EAGER")
      * @ORM\OrderBy({"id" = "DESC"})
      */
     private $comments;
