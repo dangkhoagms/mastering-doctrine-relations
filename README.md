@@ -103,8 +103,74 @@ Run script debug:twig to view syntax
         return $qb->getQuery()->getResult();
 
       }
+
+### 6. Work paginator
+
+***commentController***
     
+    public function index(CommentRepository $commentRepository,Request $request,PaginatorInterface $paginator)
+        {
+            $q = $request->query->get('p');
+            $QueryBuilder = $commentRepository->getWithSearchQueryBuilder($q);
+            $pagination = $paginator->paginate(
+                $QueryBuilder, /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+                10 /*limit per page*/
+            );
+            return $this->render('comment_admin/index.html.twig', [
+                'controller_name' => 'CommentAdminController',
+                'pagination'=>$pagination,
+                'query'=>$q
+            ]);
+        }
+        
+***Repository***
+    
+     public function getWithSearchQueryBuilder($term):QueryBuilder
+        {
+    
+            $qb = $this->createQueryBuilder('c')
+            ->innerJoin('c.article','a');
+    
+            if($term){
+                $qb->andWhere('c.content LIKE :term OR c.authorName LIKE :term OR a.name LIKE :term')
+                ->setParameter('term','%'.$term.'%');
+            }
+            return $qb->orderBy("c.id",'DESC');
+    
+        }
+
+
+***view***
+    
+    <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+***Configuration config/packages/knp_paginator.yaml***
+
+    knp_paginator:
+      template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'
+
+    
+***document*** 
+https://github.com/KnpLabs/KnpPaginatorBundle
+    
+### Working DependentFixtureInterface
+implement DependentFixtureInterface and
+
+        public function getDependencies()
+        {
+            return [
+                TagFixtures::class,
+            ];
+        }
+
+
 # SCRIPT
 
-###1. twig extension
+### 1. twig extension
     composer require twig/extensions
+### 2. install lib paginator
+    composer require knplabs/knp-paginator-bundle
+ 

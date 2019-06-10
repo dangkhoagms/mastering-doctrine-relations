@@ -27,6 +27,10 @@
     </table>
     <h2>Content</h2>
     {{ article_content |cached_markdown }}
+    <h3>Tags ({{ article.tags |length }}) </h3>
+    {% for tag in article.tags %}
+        {{ tag.name }} ,
+    {% endfor %}
     <p>-----</p>
     <h2>Comment <span> {{  article.comments | length }}</span></h2>
     {% for comment in article.noneDeleteComments %}

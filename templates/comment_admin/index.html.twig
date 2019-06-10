@@ -18,7 +18,12 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Admin Comment</h1>
+        <h1>Admin Comment ({{ pagination.getTotalItemCount }})</h1>
+        <form method="get">
+            <input type="text" name="p" value="{{ query }}">
+            <input type="submit" value="search">
+        </form>
+
         <table class="table">
             <thead>
             <tr>
@@ -31,18 +36,30 @@
             </tr>
             </thead>
             <tbody>
-            {% for comment in comments %}
+            {% if pagination %}
+                {% for comment in pagination %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>
+                            <a href="{{ path('article_show',{slug:comment.article.slug}) }}">{{ comment.article.name }}</a>
+                        </td>
+                        <td>{{ comment.authorName }}</td>
+                        <td>{{ comment.content | truncate }}</td>
+                        <td>{{ comment.createdAt | ago }}</td>
+                        <td><a href="{{ path('comment_admin_show',{id:comment.id}) }}">Show</a></td>
+                        <td><a href="{{ path('comment_admin_edit',{id:comment.id}) }}">Edit</a></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{{ comment.id }}</td>
-                    <td><a href="{{ path('article_show',{slug:comment.article.slug}) }}">{{ comment.article.name }}</a></td>
-                    <td>{{ comment.authorName }}</td>
-                    <td>{{ comment.content | truncate}}</td>
-                    <td>{{ comment.createdAt | ago }}</td>
-                    <td><a href="{{ path('comment_admin_show',{id:comment.id}) }}">Show</a></td>
-                    <td><a href="{{ path('comment_admin_edit',{id:comment.id}) }}">Edit</a></td>
+                    <td colspan="6" style="text-align: center;">No comment found</td>
                 </tr>
-            {% endfor %}
+            {% endif %}
+
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
